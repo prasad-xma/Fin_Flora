@@ -4,16 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fin And Flora | @yield('title')</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
-    <nav> </nav>
-
-    <main>
-        @yield('content')
-    </main>
-
-    <footer>
-        
-    </footer>
+<body class="pt-20">
+    @yield('content')
 </body>
 </html>

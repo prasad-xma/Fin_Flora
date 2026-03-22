@@ -13,6 +13,10 @@ class UserController extends Controller
         protected UserService $userService
     ) {}
 
+    public function showRegisterForm() {
+        return view('auth.register');
+    }
+
     public function register(Request $request) {
         // validate the req data
         $validated = $request->validate([
