@@ -65,21 +65,6 @@
 
         <!-- Manager Actions -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Team Management</h3>
-                <p class="text-gray-600 mb-4">Manage your team members and assign tasks</p>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
-                    Manage Team
-                </button>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Project Overview</h3>
-                <p class="text-gray-600 mb-4">View and manage ongoing projects</p>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
-                    View Projects
-                </button>
-            </div>
 
             <div class="bg-white rounded-lg shadow-md p-6">
                 <h3 class="text-lg font-medium text-gray-900 mb-4">Aquarium Items</h3>
@@ -105,13 +90,6 @@
                 </button>
             </div>
 
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Schedule</h3>
-                <p class="text-gray-600 mb-4">Manage team schedules and meetings</p>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
-                    View Schedule
-                </button>
-            </div>
         </div>
     </div>
 </div>

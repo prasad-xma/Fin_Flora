@@ -36,7 +36,30 @@ class AquariumItemController extends Controller
             'status' => 'required|string|in:available,unavailable,out_of_stock',
             'care_instructions' => 'nullable|string',
             'image_url' => 'nullable|url',
+            'image_upload' => 'nullable|file|max:10240',
         ]);
+
+        // Handle file upload
+        $imageUrl = $validated['image_url'] ?? null;
+        if ($request->hasFile('image_upload')) {
+            $file = $request->file('image_upload');
+            if ($file->isValid()) {
+                try {
+                    $imageInfo = getimagesize($file->getPathname());
+                    if ($imageInfo === false) {
+                        $imageUrl = $validated['image_url'] ?? null;
+                    } else {
+                        $filename = time() . '_' . $file->getClientOriginalName();
+                        $file->move(public_path('images/items'), $filename);
+                        $imageUrl = '/images/items/' . $filename;
+                    }
+                } catch (\Exception $e) {
+                    $imageUrl = $validated['image_url'] ?? null;
+                }
+            }
+        }
+        
+        $validated['image_url'] = $imageUrl;
 
         // Validate type-specific data
         $typeSpecificRules = [];
@@ -46,8 +69,6 @@ class AquariumItemController extends Controller
                 'fish_data.name' => 'required|string|max:255',
                 'fish_data.scientific_name' => 'nullable|string|max:255',
                 'fish_data.description' => 'nullable|string',
-                'fish_data.price' => 'required|numeric|min:0',
-                'fish_data.quantity' => 'required|integer|min:1',
                 'fish_data.size' => 'required|string|in:small,medium,large',
                 'fish_data.water_type' => 'required|string|in:freshwater,saltwater',
                 'fish_data.temperament' => 'nullable|string',
@@ -60,8 +81,6 @@ class AquariumItemController extends Controller
                 'plant_data.name' => 'required|string|max:255',
                 'plant_data.scientific_name' => 'nullable|string|max:255',
                 'plant_data.description' => 'nullable|string',
-                'plant_data.price' => 'required|numeric|min:0',
-                'plant_data.quantity' => 'required|integer|min:1',
                 'plant_data.size' => 'required|string|in:small,medium,large',
                 'plant_data.light_requirements' => 'required|string|in:low,medium,high',
                 'plant_data.co2_requirement' => 'required|string|in:low,high',
@@ -98,6 +117,7 @@ class AquariumItemController extends Controller
                 ->with('error', 'Unauthorized access.');
         }
 
+        $aquariumItem->load(['fish', 'plants']);
         return view('aquarium-items.edit', compact('aquariumItem'));
     }
 
@@ -119,7 +139,34 @@ class AquariumItemController extends Controller
             'status' => 'required|string|in:available,unavailable,out_of_stock',
             'care_instructions' => 'nullable|string',
             'image_url' => 'nullable|url',
+            'image_upload' => 'nullable|file|max:10240',
         ]);
+
+        // Handle file upload
+        $imageUrl = $validated['image_url'] ?? null;
+        if ($request->hasFile('image_upload')) {
+            $file = $request->file('image_upload');
+            if ($file->isValid()) {
+                try {
+                    $imageInfo = getimagesize($file->getPathname());
+                    if ($imageInfo === false) {
+                        $imageUrl = $validated['image_url'] ?? null;
+                    } else {
+                        $filename = time() . '_' . $file->getClientOriginalName();
+                        $file->move(public_path('images/items'), $filename);
+                        $imageUrl = '/images/items/' . $filename;
+                        
+                        if ($aquariumItem->image_url && file_exists(public_path($aquariumItem->image_url))) {
+                            unlink(public_path($aquariumItem->image_url));
+                        }
+                    }
+                } catch (\Exception $e) {
+                    $imageUrl = $validated['image_url'] ?? null;
+                }
+            }
+        }
+        
+        $validated['image_url'] = $imageUrl ?: $aquariumItem->image_url;
 
         // Validate type-specific data
         $typeSpecificRules = [];
@@ -129,8 +176,6 @@ class AquariumItemController extends Controller
                 'fish_data.name' => 'required|string|max:255',
                 'fish_data.scientific_name' => 'nullable|string|max:255',
                 'fish_data.description' => 'nullable|string',
-                'fish_data.price' => 'required|numeric|min:0',
-                'fish_data.quantity' => 'required|integer|min:1',
                 'fish_data.size' => 'required|string|in:small,medium,large',
                 'fish_data.water_type' => 'required|string|in:freshwater,saltwater',
                 'fish_data.temperament' => 'nullable|string',
@@ -143,8 +188,6 @@ class AquariumItemController extends Controller
                 'plant_data.name' => 'required|string|max:255',
                 'plant_data.scientific_name' => 'nullable|string|max:255',
                 'plant_data.description' => 'nullable|string',
-                'plant_data.price' => 'required|numeric|min:0',
-                'plant_data.quantity' => 'required|integer|min:1',
                 'plant_data.size' => 'required|string|in:small,medium,large',
                 'plant_data.light_requirements' => 'required|string|in:low,medium,high',
                 'plant_data.co2_requirement' => 'required|string|in:low,high',

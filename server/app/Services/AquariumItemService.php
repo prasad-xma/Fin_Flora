@@ -16,12 +16,20 @@ class AquariumItemService
         $aquariumItem = AquariumItem::create($data);
 
         if ($data['type'] === 'fish' && isset($data['fish_data'])) {
-            $fishData = array_merge($data['fish_data'], ['aquarium_item_id' => $aquariumItem->id]);
+            $fishData = array_merge($data['fish_data'], [
+                'aquarium_item_id' => $aquariumItem->id,
+                'price' => $aquariumItem->price,
+                'quantity' => $aquariumItem->total_quantity
+            ]);
             $aquariumItem->fish()->create($fishData);
         }
 
         if ($data['type'] === 'plant' && isset($data['plant_data'])) {
-            $plantData = array_merge($data['plant_data'], ['aquarium_item_id' => $aquariumItem->id]);
+            $plantData = array_merge($data['plant_data'], [
+                'aquarium_item_id' => $aquariumItem->id,
+                'price' => $aquariumItem->price,
+                'quantity' => $aquariumItem->total_quantity
+            ]);
             $aquariumItem->plants()->create($plantData);
         }
 
@@ -33,7 +41,11 @@ class AquariumItemService
         $aquariumItem->update($data);
 
         if ($data['type'] === 'fish' && isset($data['fish_data'])) {
-            $fishData = array_merge($data['fish_data'], ['aquarium_item_id' => $aquariumItem->id]);
+            $fishData = array_merge($data['fish_data'], [
+                'aquarium_item_id' => $aquariumItem->id,
+                'price' => $aquariumItem->price,
+                'quantity' => $aquariumItem->total_quantity
+            ]);
             
             if ($aquariumItem->fish()->exists()) {
                 $aquariumItem->fish()->update($fishData);
@@ -43,7 +55,11 @@ class AquariumItemService
         }
 
         if ($data['type'] === 'plant' && isset($data['plant_data'])) {
-            $plantData = array_merge($data['plant_data'], ['aquarium_item_id' => $aquariumItem->id]);
+            $plantData = array_merge($data['plant_data'], [
+                'aquarium_item_id' => $aquariumItem->id,
+                'price' => $aquariumItem->price,
+                'quantity' => $aquariumItem->total_quantity
+            ]);
             
             if ($aquariumItem->plants()->exists()) {
                 $aquariumItem->plants()->update($plantData);
