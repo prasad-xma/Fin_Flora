@@ -82,6 +82,22 @@
             </div>
 
             <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Aquarium Items</h3>
+                <p class="text-gray-600 mb-4">Manage fish, plants, and equipment inventory</p>
+                <a href="{{ route('aquarium-items.index') }}" class="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors">
+                    Manage Items
+                </a>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Add New Item</h3>
+                <p class="text-gray-600 mb-4">Add new fish, plants, or equipment to inventory</p>
+                <a href="{{ route('aquarium-items.create') }}" class="inline-block bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors">
+                    Add Item
+                </a>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
                 <h3 class="text-lg font-medium text-gray-900 mb-4">Reports</h3>
                 <p class="text-gray-600 mb-4">Generate team and project reports</p>
                 <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
