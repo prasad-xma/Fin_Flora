@@ -45,4 +45,34 @@ class UserController extends Controller
 
         return redirect('/')->with('success', 'Registration successful!');
     }
+
+    // login
+    public function login(Request $request) {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if ($this->userService->authenticateUser($credentials)) {
+            $request->session()->regenerate();
+
+            // Redirect based on role
+            $user = $this->userService->getAuthenticatedUser();
+            if ($user->isAdmin()) return redirect()->route('admin.dashboard');
+            if ($user->isManager()) return redirect()->route('manager.dashboard');
+            
+            return redirect()->route('user.dashboard');
+        }
+
+        return back()->withErrors(['email' => 'The provided credentials do not match our records.']);
+    }
+
+    // logout
+    public function logout(Request $request) {
+        $this->userService->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
+        return redirect('/')->with('success', 'Logged out successfully!');
+    }
 }

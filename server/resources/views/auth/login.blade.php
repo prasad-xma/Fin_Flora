@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Register - Fin & Flora')
+@section('title', 'Login - Fin & Flora')
 
 @section('content')
 <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -8,26 +8,29 @@
         <div class="flex flex-col md:flex-row">
             <!-- Left Side - Aquarium Image -->
             <div class="md:w-1/2 h-64 md:h-auto relative">
-                <img src="{{ asset('images/auth_imgs/register_img/Fish_tank_Example_1600x.png') }}" alt="Beautiful Aquarium" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-cyan-600/20"></div>
+                <img src="{{ asset('images/auth_imgs/login_img/lg_img_04.png') }}" alt="Beautiful Aquarium" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20"></div>
                 <div class="absolute bottom-8 left-8 text-white">
-                    <h2 class="text-3xl font-bold mb-2">Join Fin & Flora</h2>
-                    <p class="text-lg opacity-90">Start your aquatic journey today</p>
+                    <h2 class="text-3xl font-bold mb-2">Welcome to Fin & Flora</h2>
+                    <p class="text-lg opacity-90">Your gateway to aquatic wonders</p>
                 </div>
             </div>
 
-            <!-- Right Side - Register Form -->
+            <!-- Right Side - Login Form -->
             <div class="md:w-1/2 p-8 md:p-12">
                 <div class="max-w-md mx-auto">
 
                     <!-- Logo and Title -->
                     <div class="text-center mb-8">
-                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Create Account</h2>
-                        <p class="text-gray-600">Join the Fin & Flora community</p>
+                        <!-- <div class="flex justify-center mb-4">
+                            <div class="text-4xl"></div>
+                        </div> -->
+                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
+                        <p class="text-gray-600">Sign in to your Fin & Flora account</p>
                     </div>
 
-                    <!-- Register Form -->
-                    <form action="{{ route('user.register') }}" method="POST" class="space-y-6">
+                    <!-- Login Form -->
+                    <form action="{{ route('login.post') }}" method="POST" class="space-y-6">
                         @csrf
                         
                         <!-- Error Messages -->
@@ -40,7 +43,7 @@
                                         </svg>
                                     </div>
                                     <div class="ml-3">
-                                        <h3 class="text-sm font-medium text-red-800">Registration Failed</h3>
+                                        <h3 class="text-sm font-medium text-red-800">Login Failed</h3>
                                         <div class="mt-2 text-sm text-red-700">
                                             <ul class="list-disc list-inside space-y-1">
                                                 @foreach ($errors->all() as $error)
@@ -69,44 +72,6 @@
                             </div>
                         @endif
 
-                        <!-- Name Fields -->
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label for="first_name" class="block text-sm font-medium text-gray-700 mb-2">
-                                    First Name
-                                </label>
-                                <input 
-                                    id="first_name" 
-                                    name="first_name" 
-                                    type="text" 
-                                    required 
-                                    value="{{ old('first_name') }}"
-                                    class="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200" 
-                                    placeholder="First name"
-                                >
-                                @error('first_name')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div>
-                                <label for="last_name" class="block text-sm font-medium text-gray-700 mb-2">
-                                    Last Name
-                                </label>
-                                <input 
-                                    id="last_name" 
-                                    name="last_name" 
-                                    type="text" 
-                                    required 
-                                    value="{{ old('last_name') }}"
-                                    class="appearance-none block w-full px-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200" 
-                                    placeholder="Last name"
-                                >
-                                @error('last_name')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-
                         <!-- Email Field -->
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
@@ -126,7 +91,7 @@
                                     autocomplete="email" 
                                     required 
                                     value="{{ old('email') }}"
-                                    class="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200" 
+                                    class="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-200" 
                                     placeholder="Enter your email"
                                 >
                             </div>
@@ -150,9 +115,10 @@
                                     id="password" 
                                     name="password" 
                                     type="password" 
+                                    autocomplete="current-password" 
                                     required
-                                    class="appearance-none block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200" 
-                                    placeholder="Create a password (min 8 characters)"
+                                    class="appearance-none block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-200" 
+                                    placeholder="Enter your password"
                                 >
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
                                     <button type="button" class="text-gray-400 hover:text-gray-600 focus:outline-none" id="toggle-password">
@@ -172,72 +138,43 @@
                             @enderror
                         </div>
 
-                        <!-- Phone Number Field -->
-                        <div>
-                            <label for="phone_no" class="block text-sm font-medium text-gray-700 mb-2">
-                                Phone Number (Optional)
-                            </label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
-                                    </svg>
-                                </div>
+                        <!-- Remember Me and Forgot Password -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
                                 <input 
-                                    id="phone_no" 
-                                    name="phone_no" 
-                                    type="tel" 
-                                    value="{{ old('phone_no') }}"
-                                    class="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200" 
-                                    placeholder="Enter your phone number"
+                                    id="remember-me" 
+                                    name="remember" 
+                                    type="checkbox" 
+                                    class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
                                 >
+                                <label for="remember-me" class="ml-2 block text-sm text-gray-700">
+                                    Remember me
+                                </label>
                             </div>
-                            @error('phone_no')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <!-- Address Field -->
-                        <div>
-                            <label for="address" class="block text-sm font-medium text-gray-700 mb-2">
-                                Address (Optional)
-                            </label>
-                            <div class="relative">
-                                <div class="absolute top-3 left-3 flex items-start pointer-events-none">
-                                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
-                                <textarea 
-                                    id="address" 
-                                    name="address" 
-                                    rows="3"
-                                    class="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200" 
-                                    placeholder="Enter your address"
-                                >{{ old('address') }}</textarea>
+                            <div class="text-sm">
+                                <a href="#" class="font-medium text-purple-600 hover:text-purple-500">
+                                    Forgot your password?
+                                </a>
                             </div>
-                            @error('address')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
                         </div>
 
                         <!-- Submit Button -->
                         <div>
                             <button 
                                 type="submit" 
-                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 transform hover:-translate-y-0.5 transition-all duration-200"
+                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-600 transform hover:-translate-y-0.5 transition-all duration-200"
                             >
-                                Create Account
+                                Sign In
                             </button>
                         </div>
                     </form>
 
-                    <!-- Login Link -->
+                    <!-- Sign Up Link -->
                     <div class="mt-6 text-center">
                         <p class="text-sm text-gray-600">
-                            Already have an account? 
-                            <a href="{{ route('login') }}" class="font-medium text-blue-600 hover:text-blue-500">
-                                Sign in here
+                            Don't have an account? 
+                            <a href="{{ route('register.form') }}" class="font-medium text-blue-600 hover:text-blue-500">
+                                Sign up here
                             </a>
                         </p>
                     </div>

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserService
 {
@@ -19,5 +20,20 @@ class UserService
             'phone_no'   => $data['phone_no'] ?? null,
             'address'    => $data['address'] ?? null,
         ]);
+    }
+
+    public function authenticateUser(array $credentials): bool
+    {
+        return Auth::attempt($credentials);
+    }
+
+    public function getAuthenticatedUser(): ?User
+    {
+        return Auth::user();
+    }
+
+    public function logout(): void
+    {
+        Auth::logout();
     }
 }
