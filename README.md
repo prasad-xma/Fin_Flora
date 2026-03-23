@@ -197,30 +197,6 @@ Fin_Flora/
 - **Authentication**: Secure password hashing and session management
 - **Authorization**: Role-based access control for different user types
 
-## 📱 Responsive Design
-
-The platform is built with a mobile-first approach, ensuring optimal performance across all devices:
-
-- **Desktop (≥1024px)**: Full-featured experience with multi-column layouts
-- **Tablet (768px-1024px)**: Adapted layouts with touch-friendly interfaces
-- **Mobile (≤768px)**: Optimized for small screens with simplified navigation
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 📞 Support
-
-For support and questions, please contact the development team or create an issue in the repository.
-
 ---
 
 **Fin & Flora** - Your Complete Aquarium E-Commerce Solution 🐠🌿
