@@ -121,4 +121,48 @@ class UserController extends Controller
 
         return redirect()->route('profile')->with('success', 'Profile updated successfully!');
     }
+
+    // Admin Profile methods
+    public function adminProfile()
+    {
+        $user = auth()->user();
+        return view('profile.admin-edit', compact('user'));
+    }
+
+    public function updateAdminProfile(Request $request)
+    {
+        $user = auth()->user();
+        
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'phone_no' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:500',
+            'current_password' => 'nullable|required_with:new_password',
+            'new_password' => 'nullable|min:8|confirmed',
+        ]);
+
+        // Check current password if user wants to change password
+        if ($request->filled('current_password')) {
+            if (!Hash::check($request->current_password, $user->password)) {
+                return back()->withErrors(['current_password' => 'The current password is incorrect.']);
+            }
+            $validated['password'] = Hash::make($request->new_password);
+        }
+
+        // Update user name
+        $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
+
+        // Remove password fields from validated data if not changing password
+        if (!$request->filled('new_password')) {
+            unset($validated['current_password'], $validated['new_password'], $validated['new_password_confirmation']);
+        } else {
+            unset($validated['current_password'], $validated['new_password_confirmation']);
+        }
+
+        $user->update($validated);
+
+        return redirect()->route('admin.profile')->with('success', 'Admin profile updated successfully!');
+    }
 }

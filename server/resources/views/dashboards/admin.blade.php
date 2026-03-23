@@ -3,6 +3,27 @@
 @section('title', 'Admin Dashboard - Fin & Flora')
 
 @section('content')
+<style>
+    .admin-profile-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        padding: 12px 24px !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        font-size: 1rem !important;
+        text-decoration: none !important;
+        display: inline-block !important;
+        width: 100% !important;
+        text-align: center !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    .admin-profile-btn:hover {
+        background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
+    }
+</style>
 <div class="min-h-screen bg-gray-50 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
@@ -98,6 +119,14 @@
                 <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors w-full">
                     Manage Users
                 </button>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Admin Profile</h3>
+                <p class="text-gray-600 mb-4">Update your admin account details</p>
+                <a href="{{ route('admin.profile') }}" class="admin-profile-btn">
+                    Edit Profile
+                </a>
             </div>
 
             <div class="bg-white rounded-lg shadow-md p-6">

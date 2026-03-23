@@ -48,6 +48,10 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin/dashboard', function() { return view('dashboards.admin'); })->name('admin.dashboard');
         
+        // Admin Profile Routes
+        Route::get('/admin/profile', [UserController::class, 'adminProfile'])->name('admin.profile');
+        Route::put('/admin/profile', [UserController::class, 'updateAdminProfile'])->name('admin.profile.update');
+        
         // Manager Management
         Route::get('/admin/managers', [AdminManagerController::class, 'index'])->name('admin.managers.index');
         Route::get('/admin/managers/create', [AdminManagerController::class, 'create'])->name('admin.managers.create');
