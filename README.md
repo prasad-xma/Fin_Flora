@@ -198,5 +198,3 @@ Fin_Flora/
 - **Authorization**: Role-based access control for different user types
 
 ---
-
-**Fin & Flora** - Your Complete Aquarium E-Commerce Solution 🐠🌿
