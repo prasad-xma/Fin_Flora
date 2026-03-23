@@ -2,13 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 // import user controller 
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AquariumItemController;
 use App\Http\Controllers\AdminManagerController;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 // Authentication Routes
 Route::get('/login', function() { return view('auth.login'); })->name('login');
