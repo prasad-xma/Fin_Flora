@@ -146,7 +146,7 @@ class CartController extends Controller
                 'stripe_payment_id' => 'temp_' . uniqid(),
                 'amount' => $total,
                 'currency' => 'usd',
-                'status' => 'pending',
+                'status' => 'completed',
                 'payment_method' => 'stripe',
             ]);
 
