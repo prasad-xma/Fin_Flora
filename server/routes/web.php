@@ -35,6 +35,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::put('/cart/{cart}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/{cart}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+    Route::get('/checkout/success', function() { 
+        return view('checkout.success'); 
+    })->name('checkout.success');
 
     // Admin Only
     Route::middleware(['admin'])->group(function () {

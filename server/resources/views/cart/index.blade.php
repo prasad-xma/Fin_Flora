@@ -219,7 +219,10 @@
                     <span>${{ number_format($total * 1.08, 2) }}</span>
                 </div>
 
-                <button class="checkout-btn">Proceed to Checkout</button>
+                <form action="{{ route('checkout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="checkout-btn">Proceed to Checkout</button>
+                </form>
                 <a href="{{ route('welcome') }}" style="display: block; text-align: center; margin-top: 15px; font-size: 0.85rem; color: #888;">Continue Shopping</a>
             </div>
         </div>

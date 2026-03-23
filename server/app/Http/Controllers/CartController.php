@@ -6,6 +6,8 @@ use App\Models\Cart;
 use App\Models\AquariumItem;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
 
 class CartController extends Controller
 {
@@ -116,5 +118,49 @@ class CartController extends Controller
             'message' => 'Item removed from cart!',
             'cart_count' => $cartCount,
         ]);
+    }
+
+    public function checkout()
+    {
+        $cartItems = Cart::with('aquariumItem')
+            ->where('user_id', auth()->id())
+            ->get();
+
+        if ($cartItems->isEmpty()) {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
+        }
+
+        $total = $cartItems->sum(function ($item) {
+            return $item->quantity * $item->price;
+        });
+
+        // Convert to cents for Stripe
+        $amountInCents = (int) (($total * 1.08) * 100); // Including tax
+
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        try {
+            $session = Session::create([
+                'payment_method_types' => ['card'],
+                'line_items' => [[
+                    'price_data' => [
+                        'currency' => 'usd',
+                        'product_data' => [
+                            'name' => 'Fin Flora Order',
+                        ],
+                        'unit_amount' => $amountInCents,
+                    ],
+                    'quantity' => 1,
+                ]],
+                'mode' => 'payment',
+                'success_url' => route('checkout.success'),
+                'cancel_url' => route('cart.index'),
+            ]);
+
+            return redirect($session->url, 303);
+
+        } catch (\Exception $e) {
+            return redirect()->route('cart.index')->with('error', 'Unable to create checkout session: ' . $e->getMessage());
+        }
     }
 }
