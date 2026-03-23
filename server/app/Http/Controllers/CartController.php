@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\AquariumItem;
+use App\Models\Payment;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Stripe\Stripe;
@@ -130,16 +132,41 @@ class CartController extends Controller
             return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
 
-        $total = $cartItems->sum(function ($item) {
+        $subtotal = $cartItems->sum(function ($item) {
             return $item->quantity * $item->price;
         });
 
-        // Convert to cents for Stripe
-        $amountInCents = (int) (($total * 1.08) * 100); // Including tax
-
-        Stripe::setApiKey(config('services.stripe.secret'));
+        $total = $subtotal * 1.08; // Including tax
+        $amountInCents = (int) ($total * 100);
 
         try {
+            // Create payment record first
+            $payment = Payment::create([
+                'user_id' => auth()->id(),
+                'stripe_payment_id' => 'temp_' . uniqid(),
+                'amount' => $total,
+                'currency' => 'usd',
+                'status' => 'pending',
+                'payment_method' => 'stripe',
+            ]);
+
+            // Create order records for each cart item
+            foreach ($cartItems as $cartItem) {
+                Order::create([
+                    'user_id' => auth()->id(),
+                    'aquarium_item_id' => $cartItem->aquarium_item_id,
+                    'quantity' => $cartItem->quantity,
+                    'price' => $cartItem->price,
+                    'user_address' => auth()->user()->address,
+                ]);
+            }
+
+            // Clear the cart after creating orders
+            Cart::where('user_id', auth()->id())->delete();
+
+            // Create Stripe checkout session
+            Stripe::setApiKey(config('services.stripe.secret'));
+
             $session = Session::create([
                 'payment_method_types' => ['card'],
                 'line_items' => [[

@@ -29,6 +29,10 @@ Route::middleware(['auth'])->group(function () {
     // User Dashboard
     Route::get('/dashboard', function() { return view('dashboards.user'); })->name('user.dashboard');
 
+    // Profile Routes
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    Route::put('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
+
     // Cart Routes
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::get('/cart/count', [CartController::class, 'count'])->name('cart.count');

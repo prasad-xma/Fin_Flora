@@ -17,7 +17,7 @@
 
         <!-- Dashboard Content -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <a href="{{ route('profile') }}" class="bg-white rounded-lg shadow-md p-6 block hover:shadow-lg transition-shadow duration-200">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 bg-purple-100 rounded-lg p-3">
                         <svg class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -29,7 +29,7 @@
                         <p class="text-gray-600">Manage your profile information</p>
                     </div>
                 </div>
-            </div>
+            </a>
 
             <div class="bg-white rounded-lg shadow-md p-6">
                 <div class="flex items-center">
