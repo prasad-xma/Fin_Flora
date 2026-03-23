@@ -225,4 +225,57 @@
         </div>
     @endif
 </div>
+
+<script>
+function removeFromCart(itemId) {
+    if (confirm('Are you sure you want to remove this item?')) {
+        fetch(`/cart/${itemId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Error removing item: ' + (data.message || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            console.error('Remove error:', error);
+            alert('Error removing item. Please try again.');
+        });
+    }
+}
+
+function updateQuantity(event, itemId, newQuantity) {
+    event.preventDefault();
+    
+    fetch(`/cart/${itemId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            quantity: newQuantity
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert('Error updating quantity: ' + (data.message || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+        console.error('Update error:', error);
+        alert('Error updating quantity. Please try again.');
+    });
+}
+</script>
 @endsection
