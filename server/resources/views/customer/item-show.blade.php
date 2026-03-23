@@ -3,6 +3,12 @@
 @section('title', 'Item Details')
 
 @section('content')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+    div.min-h-screen.bg-gradient-to-br.from-blue-50.via-white.to-green-50.py-8 {
+        background-image: linear-gradient(to bottom right, #ADD8E6, #FFFFFF, #C6F4D6);
+    }
+</style>
 <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Breadcrumb -->
@@ -322,15 +328,31 @@ function addToCart(itemId, button) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            showNotification(data.message, 'success');
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: data.message,
+                timer: 2000,
+                showConfirmButton: false
+            });
             updateCartCounter(data.cart_count);
         } else {
-            showNotification(data.message, 'error');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: data.message,
+                confirmButtonText: 'OK'
+            });
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        showNotification('An error occurred. Please try again.', 'error');
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'An error occurred. Please try again.',
+            confirmButtonText: 'OK'
+        });
     })
     .finally(() => {
         // Restore button

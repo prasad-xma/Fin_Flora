@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Managers - Admin Dashboard')
+@section('title', 'Users - Admin Dashboard')
 
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
-    .managers-wrapper {
+    .users-wrapper {
         max-width: 1200px;
         margin: 40px auto;
         padding: 0 20px;
@@ -26,7 +26,7 @@
         margin: 0;
     }
 
-    .add-manager-btn {
+    .add-user-btn {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         padding: 12px 24px;
@@ -37,13 +37,13 @@
         transition: all 0.2s;
     }
 
-    .add-manager-btn:hover {
+    .add-user-btn:hover {
         background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
     }
 
-    .managers-table {
+    .users-table {
         background: white;
         border-radius: 12px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -149,8 +149,35 @@
         color: #991b1b;
     }
 
+    .pagination {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .pagination a {
+        padding: 8px 16px;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        color: #374151;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .pagination a:hover {
+        background: #f3f4f6;
+        color: #111827;
+    }
+
+    .pagination .current {
+        background: #4f46e5;
+        color: white;
+        border-color: #4f46e5;
+    }
+
     @media (max-width: 768px) {
-        .managers-wrapper {
+        .users-wrapper {
             margin: 20px auto;
             padding: 0 10px;
         }
@@ -176,12 +203,9 @@
     }
 </style>
 
-<div class="managers-wrapper">
+<div class="users-wrapper">
     <div class="page-header">
-        <h1 class="page-title">Managers</h1>
-        <a href="{{ route('admin.managers.create') }}" class="add-manager-btn">
-            + Add New Manager
-        </a>
+        <h1 class="page-title">Users</h1>
     </div>
 
     @if(session('success'))
@@ -196,7 +220,7 @@
         </div>
     @endif
 
-    <div class="managers-table">
+    <div class="users-table">
         <table class="table">
             <thead>
                 <tr>
@@ -204,49 +228,51 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>
-                    <th>Created At</th>
+                    <th>Address</th>
+                    <th>Registered At</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @if($managers->isEmpty())
+                @if($users->isEmpty())
                     <tr>
-                        <td colspan="7" style="text-align: center; padding: 40px; color: #6b7280;">
-                            No managers found.
+                        <td colspan="8" style="text-align: center; padding: 40px; color: #6b7280;">
+                            No users found.
                         </td>
                     </tr>
                 @else
-                    @foreach($managers as $manager)
+                    @foreach($users as $user)
                     <tr>
-                        <td>{{ $manager->id }}</td>
-                        <td>{{ $manager->name }}</td>
-                        <td>{{ $manager->email }}</td>
-                        <td>{{ $manager->phone_no ?: '-' }}</td>
-                        <td>{{ $manager->created_at->format('M d, Y') }}</td>
+                        <td>{{ $user->id }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->phone_no ?: '-' }}</td>
+                        <td>{{ Str::limit($user->address ?: '-', 30) }}</td>
+                        <td>{{ $user->created_at->format('M d, Y') }}</td>
                         <td>
-                            <span class="status-badge {{ $manager->is_active ? 'status-active' : 'status-inactive' }}">
-                                {{ $manager->is_active ? 'Active' : 'Inactive' }}
+                            <span class="status-badge {{ $user->is_active ? 'status-active' : 'status-inactive' }}">
+                                {{ $user->is_active ? 'Active' : 'Inactive' }}
                             </span>
                         </td>
                         <td>
                             <div class="action-buttons">
-                                <a href="{{ route('admin.managers.show', $manager) }}" class="btn btn-view">
+                                <a href="{{ route('admin.users.show', $user) }}" class="btn btn-view">
                                     <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M10 12a2 2 0 100-4 2 2 0 000-4z"/>
                                     </svg>
                                     View
                                 </a>
-                                <a href="{{ route('admin.managers.edit', $manager) }}" class="btn btn-edit">
+                                <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-edit">
                                     <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M13.586 3.586a2 2 0 112.828 0l-4.414 4.414a2 2 0 01-2.828 0L4 12a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2V8a2 2 0 00-2-2z"/>
                                     </svg>
                                     Edit
                                 </a>
-                                @if($manager->is_active)
-                                    <form action="{{ route('admin.managers.toggle-status', $manager) }}" method="POST" style="display: inline;">
+                                @if($user->is_active)
+                                    <form action="{{ route('admin.users.toggle-status', $user) }}" method="POST" style="display: inline;">
                                         @csrf
-                                        <button type="submit" class="btn btn-deactivate" onclick="return confirm('Are you sure you want to deactivate this manager?')">
+                                        <button type="submit" class="btn btn-deactivate" onclick="return confirm('Are you sure you want to deactivate this user?')">
                                             <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 00-1.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293z" clip-rule="evenodd"/>
                                             </svg>
@@ -254,9 +280,9 @@
                                         </button>
                                     </form>
                                 @else
-                                    <form action="{{ route('admin.managers.toggle-status', $manager) }}" method="POST" style="display: inline;">
+                                    <form action="{{ route('admin.users.toggle-status', $user) }}" method="POST" style="display: inline;">
                                         @csrf
-                                        <button type="submit" class="btn btn-activate" onclick="return confirm('Are you sure you want to activate this manager?')">
+                                        <button type="submit" class="btn btn-activate" onclick="return confirm('Are you sure you want to activate this user?')">
                                             <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707a1 1 0 00-1.414 0L5.293 4.707a1 1 0 112.828 0l4.414 4.414a1 1 0 011.414 0L10 13.414l4.414-4.414z" clip-rule="evenodd"/>
                                             </svg>
@@ -271,6 +297,10 @@
                 @endforelse
             </tbody>
         </table>
+    </div>
+
+    <div class="pagination">
+        {{ $users->links() }}
     </div>
 </div>
 

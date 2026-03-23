@@ -3,6 +3,7 @@
 @section('title', 'Shopping Cart')
 
 @section('content')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
     .cart-wrapper {
         max-width: 1000px;
@@ -242,9 +243,21 @@ function removeFromCart(itemId) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                location.reload();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Item removed from cart successfully',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                setTimeout(() => location.reload(), 1500);
             } else {
-                alert('Error removing item: ' + (data.message || 'Unknown error'));
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Error removing item: ' + (data.message || 'Unknown error'),
+                    confirmButtonText: 'OK'
+                });
             }
         })
         .catch(error => {
@@ -270,14 +283,31 @@ function updateQuantity(event, itemId, newQuantity) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            location.reload();
+            Swal.fire({
+                icon: 'success',
+                title: 'Updated!',
+                text: 'Quantity updated successfully',
+                timer: 2000,
+                showConfirmButton: false
+            });
+            setTimeout(() => location.reload(), 1500);
         } else {
-            alert('Error updating quantity: ' + (data.message || 'Unknown error'));
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Error updating quantity: ' + (data.message || 'Unknown error'),
+                confirmButtonText: 'OK'
+            });
         }
     })
     .catch(error => {
         console.error('Update error:', error);
-        alert('Error updating quantity. Please try again.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Error updating quantity. Please try again.',
+            confirmButtonText: 'OK'
+        });
     });
 }
 </script>

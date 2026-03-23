@@ -63,6 +63,17 @@
 
 @push('styles')
 <style>
+    /* Page Layout Fixes */
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    body {
+        overflow-x: hidden;
+    }
+    
     /* Enhanced Hero Section Styles */
     .hero-overlay {
         background: linear-gradient(135deg, 
@@ -118,6 +129,9 @@
     .items-section {
         background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
         position: relative;
+        min-height: 100vh;
+        padding-bottom: 80px;
+        margin-top: 0;
     }
     
     .items-section::before {
@@ -203,6 +217,14 @@
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         overflow: hidden;
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 320px;
+        min-height: 420px;
+        max-height: 520px;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
     }
     
     .item-card::before {
@@ -234,10 +256,62 @@
     
     .item-card img {
         transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 12px 12px 0 0;
     }
     
     .item-card:hover img {
         transform: scale(1.08) rotate(1deg);
+    }
+    
+    /* Card content styling */
+    .item-card .card-content {
+        padding: 16px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .item-card .card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 8px;
+        line-height: 1.3;
+        height: 2.6em;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+    
+    .item-card .card-description {
+        font-size: 0.9rem;
+        color: #6b7280;
+        margin-bottom: 12px;
+        line-height: 1.4;
+        height: 2.8em;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+    
+    .item-card .card-price {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #059669;
+        margin-bottom: 12px;
+    }
+    
+    .item-card .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
     }
     
     /* Enhanced Status Badges */
@@ -375,6 +449,51 @@
         .item-card:hover {
             transform: translateY(-8px) scale(1.01);
         }
+        
+        .item-card {
+            max-width: 100%;
+            min-height: 380px;
+            max-height: 480px;
+        }
+        
+        .items-section {
+            padding-bottom: 60px;
+        }
+    }
+    
+    @media (max-width: 640px) {
+        .item-card {
+            min-height: 360px;
+            max-height: 460px;
+        }
+        
+        .item-card img {
+            height: 180px;
+        }
+        
+        .item-card .card-content {
+            padding: 12px;
+        }
+        
+        .item-card .card-title {
+            font-size: 1rem;
+        }
+        
+        .item-card .card-description {
+            font-size: 0.85rem;
+        }
+    }
+    
+    /* Ensure items grid has proper spacing */
+    #items-grid {
+        margin-bottom: 40px;
+    }
+    
+    /* Footer spacing */
+    .items-section:after {
+        content: '';
+        display: block;
+        height: 40px;
     }
 </style>
 @endpush

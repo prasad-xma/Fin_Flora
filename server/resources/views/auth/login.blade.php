@@ -3,6 +3,7 @@
 @section('title', 'Login - Fin & Flora')
 
 @section('content')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-6xl w-full mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
         <div class="flex flex-col md:flex-row">
@@ -203,6 +204,29 @@ document.addEventListener('DOMContentLoaded', function() {
             eyeOffIcon.classList.add('hidden');
         }
     });
+});
+
+// Check for login success message and show SweetAlert
+document.addEventListener('DOMContentLoaded', function() {
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '{{ session('success') }}',
+            timer: 3000,
+            showConfirmButton: false
+        });
+    @endif
+
+    // Check for login error message and show SweetAlert
+    @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: '{{ session('error') }}',
+            confirmButtonText: 'OK'
+        });
+    @endif
 });
 </script>
 @endsection

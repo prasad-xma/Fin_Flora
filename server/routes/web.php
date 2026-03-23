@@ -61,6 +61,14 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/admin/managers/{manager}', [AdminManagerController::class, 'update'])->name('admin.managers.update');
         Route::delete('/admin/managers/{manager}', [AdminManagerController::class, 'destroy'])->name('admin.managers.destroy');
         Route::post('/admin/managers/{manager}/toggle-status', [AdminManagerController::class, 'toggleStatus'])->name('admin.managers.toggle-status');
+        
+        // User Management
+        Route::get('/admin/users', [UserController::class, 'usersIndex'])->name('admin.users.index');
+        Route::get('/admin/users/{user}', [UserController::class, 'userShow'])->name('admin.users.show');
+        Route::get('/admin/users/{user}/edit', [UserController::class, 'userEdit'])->name('admin.users.edit');
+        Route::put('/admin/users/{user}', [UserController::class, 'userUpdate'])->name('admin.users.update');
+        Route::post('/admin/users/{user}/toggle-status', [UserController::class, 'userToggleStatus'])->name('admin.users.toggle-status');
+        Route::delete('/admin/users/{user}', [UserController::class, 'userDestroy'])->name('admin.users.destroy');
     });
 
     // Manager Only

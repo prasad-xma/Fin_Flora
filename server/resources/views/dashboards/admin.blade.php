@@ -23,6 +23,26 @@
         transform: translateY(-1px) !important;
         box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
     }
+
+    .custom-users-btn {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+        color: white !important;
+        padding: 12px 24px !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        font-size: 1rem !important;
+        text-decoration: none !important;
+        display: inline-block !important;
+        width: 100% !important;
+        text-align: center !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    .custom-users-btn:hover {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4) !important;
+    }
 </style>
 <div class="min-h-screen bg-gray-50 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -115,10 +135,10 @@
 
             <div class="bg-white rounded-lg shadow-md p-6">
                 <h3 class="text-lg font-medium text-gray-900 mb-4">User Management</h3>
-                <p class="text-gray-600 mb-4">View and manage all users</p>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors w-full">
+                <p class="text-gray-600 mb-4">View and manage all users (customers)</p>
+                <a href="{{ route('admin.users.index') }}" class="custom-users-btn">
                     Manage Users
-                </button>
+                </a>
             </div>
 
             <div class="bg-white rounded-lg shadow-md p-6">
@@ -134,30 +154,6 @@
                 <p class="text-gray-600 mb-4">Configure system preferences</p>
                 <button class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors w-full">
                     Settings
-                </button>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Reports</h3>
-                <p class="text-gray-600 mb-4">Generate system reports</p>
-                <button class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors w-full">
-                    Generate Reports
-                </button>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Audit Logs</h3>
-                <p class="text-gray-600 mb-4">View system activity logs</p>
-                <button class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg transition-colors w-full">
-                    View Logs
-                </button>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Backup</h3>
-                <p class="text-gray-600 mb-4">System backup and restore</p>
-                <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors w-full">
-                    Backup System
                 </button>
             </div>
         </div>

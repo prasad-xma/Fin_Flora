@@ -165,4 +165,78 @@ class UserController extends Controller
 
         return redirect()->route('admin.profile')->with('success', 'Admin profile updated successfully!');
     }
+
+    // Admin User Management Methods
+    public function usersIndex()
+    {
+        $users = User::where('role', 'user')->orderBy('created_at', 'desc')->paginate(10);
+        return view('admin.users.index', compact('users'));
+    }
+
+    public function userShow(User $user)
+    {
+        if ($user->role !== 'user') {
+            return redirect()->route('admin.users.index')
+                ->with('error', 'User not found.');
+        }
+        return view('admin.users.show', compact('user'));
+    }
+
+    public function userEdit(User $user)
+    {
+        if ($user->role !== 'user') {
+            return redirect()->route('admin.users.index')
+                ->with('error', 'User not found.');
+        }
+        return view('admin.users.edit', compact('user'));
+    }
+
+    public function userUpdate(Request $request, User $user)
+    {
+        if ($user->role !== 'user') {
+            return redirect()->route('admin.users.index')
+                ->with('error', 'User not found.');
+        }
+
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'phone_no' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:500',
+        ]);
+
+        $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
+        $user->update($validated);
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'User updated successfully!');
+    }
+
+    public function userToggleStatus(User $user)
+    {
+        if ($user->role !== 'user') {
+            return redirect()->route('admin.users.index')
+                ->with('error', 'User not found.');
+        }
+
+        $user->is_active = !$user->is_active;
+        $user->save();
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'User status updated successfully!');
+    }
+
+    public function userDestroy(User $user)
+    {
+        if ($user->role !== 'user') {
+            return redirect()->route('admin.users.index')
+                ->with('error', 'User not found.');
+        }
+
+        $user->delete();
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'User deleted successfully!');
+    }
 }
