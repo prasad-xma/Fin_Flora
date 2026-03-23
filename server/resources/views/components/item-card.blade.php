@@ -1,6 +1,6 @@
 @props(['item'])
 
-<a href="{{ route('aquarium-items.show', $item->id) }}" class="block bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer transform hover:-translate-y-1">
+<a href="{{ route('customer.item.show', $item->id) }}" class="block bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer transform hover:-translate-y-1">
     <!-- Image Section -->
     <div class="relative h-56 overflow-hidden bg-gradient-to-br from-blue-50 to-green-50">
         @if($item->image_url)

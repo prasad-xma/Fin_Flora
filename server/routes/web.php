@@ -6,8 +6,13 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AquariumItemController;
 use App\Http\Controllers\AdminManagerController;
+use App\Http\Controllers\CustomerItemController;
+use App\Http\Controllers\CartController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+
+// Customer Item Details (Public Access)
+Route::get('/item/{aquariumItem}', [CustomerItemController::class, 'show'])->name('customer.item.show');
 
 // Authentication Routes
 Route::get('/login', function() { return view('auth.login'); })->name('login');
@@ -23,6 +28,13 @@ Route::middleware(['auth'])->group(function () {
     
     // User Dashboard
     Route::get('/dashboard', function() { return view('dashboards.user'); })->name('user.dashboard');
+
+    // Cart Routes
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::get('/cart/count', [CartController::class, 'count'])->name('cart.count');
+    Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+    Route::put('/cart/{cart}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{cart}', [CartController::class, 'remove'])->name('cart.remove');
 
     // Admin Only
     Route::middleware(['admin'])->group(function () {
